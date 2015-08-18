@@ -1,0 +1,35 @@
+/* app css stylesheet */
+body {
+    padding-top: 20px;
+    /*an image to the page*/
+    background-image: url(vesna.jpg);
+}
+
+/*scrollbars*/
+.scroll {
+    border: 1px solid gray;
+    overflow: scroll;
+    /*viewport height (vh) and viewport width (vw):*/
+    width: 30vw;
+    height:70vh;
+    background-color: white;
+}
+
+/*/!*button position*!/*/
+/*.btn-group{*/
+    /*left:46%;*/
+/*}*/
+
+#btnB1,#btnB2 {
+    /*border: 1px solid gray;*/
+    color: green ;
+}
+
+.input-group{
+    width: 30vw;
+}
+
+/*make our cursor to be a hand*/
+a{
+    cursor: pointer;
+}

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" ng-app="fsApp">
+<link>
+<meta charset="utf-8">
+<title>File System Manager</title>
+
+<!--for bootstrap-->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+<!--<link type="text/css" rel="stylesheet" src="css/bootstrap-theme.min.css">-->
+<link rel="stylesheet" href="css/app.css">
+
+<script src="http://code.angularjs.org/1.2.0-rc.2/angular.min.js"></script>
+<script src="http://code.angularjs.org/1.2.0-rc.2/angular-route.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css"
+      href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<!--для больших иконок-->
+
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+
+</head>
+<!---------------------------------------------------------------------------------------->
+
+<body>
+<!--modal window of authentication-->
+
+<!--<div ng-controller="AuthenController">-->
+
+<!--<script type="text/javascript">-->
+<!--$(document).ready(function () {-->
+<!--$('#myModalOption').modal({-->
+<!--backdrop: 'static',-->
+<!--keyboard: true-->
+<!--});-->
+
+<!--});-->
+<!--</script>-->
+
+<!--<div id="myModalOption" class="modal fade">-->
+<!--<div class="modal-dialog">-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header">-->
+<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+<!--<h4 class="modal-title">Подтверждение</h4>-->
+<!--</div>-->
+<!--<form ng-submit="UserAuth(UserName, PassWord)">-->
+<!--<div class="modal-body">-->
+<!--<div class="form-group">-->
+<!--<label for="UserName">UserName : </label>-->
+<!--<input type="text" class="form-control" id="UserName" ng-model="UserName" ng-init="UserName = [this.auth.username]">-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="PassWord">PassWord : </label>-->
+<!--<input type="text" class="form-control" id="PassWord" ng-model="PassWord" ng-init="PassWord = [this.auth.password]">-->
+<!--</div>-->
+<!--<p class="text-warning">-->
+<!--<small>Если вы не сохраните, изменения будут потеряны.</small>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--&lt;!&ndash;<button type="button" class="btn btn-primary" data-dismiss="modal">Enter</button>&ndash;&gt;-->
+<!--&lt;!&ndash;<button type="button" class="btn btn-default">Save changes</button>&ndash;&gt;-->
+<!--<button class="btn btn-primary" type="submit">Enter</button>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+
+
+<!--input server address-->
+<div ng-controller="MyFormController">
+
+    <div class="row">
+        <div class="col-md-5 col-md-offset-2">
+            <h2><i class="fa fa-cloud"></i> Server:</h2>
+
+            <form class="form-inline" ng-submit="MainList(field_ip, field_port)">
+
+                <div class="form-group">
+                    <label for="ip">ip : </label>
+                    <input type="text" class="form-control" id="ip" ng-model="field_ip"
+                           ng-init="field_ip = [this.message.ip]">
+                </div>
+                <div class="form-group">
+                    <label for="port">port : </label>
+                    <input type="text" class="form-control" id="port" ng-model="field_port"
+                           ng-init="field_port = [this.message.port]">
+                </div>
+
+                <button class="btn btn-default" id="button_connect" type="submit">CONNECT <i class="fa fa-plug"></i>
+                </button>
+
+            </form>
+
+
+        </div>
+
+    </div>
+    <br><br>
+    <!--file manager-->
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-4 col-md-offset-2">
+
+
+                <!-- back button and field with current address-->
+                <div class="input-group">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="btnB1" ng-click="PreviousList1()">
+                        <i class="fa fa-arrow-left"></i> назад...
+                    </button>
+                        </span>
+                    <input type="text" class="form-control" value="{{visualpath1}}">
+                </div>
+
+                <div class="scroll">
+                    <ul class="list-group">
+
+                        <!--output with sorting-->
+                        <li ng-repeat="doc in docs1 | orderBy:['isFile', 'name']" class="list-group-item">
+
+                            <div class="dd-handle">
+                                <a ng-click="NewList1(doc)">
+                                    {{doc.isFile | checkmark}} {{doc.name}}
+                                </a>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="input-group">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="btnB2" ng-click="PreviousList2()">
+                        <i class="fa fa-arrow-left"></i> назад...
+                    </button>
+                        </span>
+                    <input type="text" class="form-control" value="{{visualpath2}}">
+                </div>
+
+                <div class="scroll">
+
+                    <ul class="list-group">
+                        <li ng-repeat="doc in docs2 | orderBy:['isFile', 'name']" class="list-group-item">
+
+                            <div class="dd-handle">
+
+                                <a ng-click="NewList2(doc)">
+                                    {{doc.isFile | checkmark}} {{doc.name}}
+                                </a>
+
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!--кнопки-->
+    <!--<br><br>-->
+
+    <!--<div class="row">-->
+    <!--<div class="btn-group" role="group" aria-label="...">-->
+    <!--<button type="button" onclick="sendMes()" class="btn btn-default">Copy</button>-->
+    <!--<button type="button" class="btn btn-default">Insert</button>-->
+    <!--</div>-->
+    <!--</div>-->
+
+
+</div>
+<!---------------------------------------------------------------------------------------->
+
+</body>
+
+</html>
+
+
